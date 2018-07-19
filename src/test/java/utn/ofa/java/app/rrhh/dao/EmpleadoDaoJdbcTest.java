@@ -5,6 +5,7 @@
  */
 package utn.ofa.java.app.rrhh.dao;
 
+import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,7 +45,7 @@ public class EmpleadoDaoJdbcTest {
        //creo objeto empleado para llamar al metodo crear
        Efectivo empleado = new Efectivo();
        java.util.Date fechaActual = new java.util.Date();       
-       empleado.setId(2);
+       empleado.setId(1);
        empleado.setNombre("JUAN" );
        empleado.setCorreoElectronico("JUAN@PEPE.COM");
        empleado.setCuil("21257131123");
@@ -56,7 +57,7 @@ public class EmpleadoDaoJdbcTest {
        System.out.println(empleado.getNombre() + "Crear2:");        
        empleadoDaoJdbc.crear(empleado);
        System.out.println(empleado.getNombre() + "Crear3:");
-       Empleado empleado2 =  empleadoDaoJdbc.buscarPorId(2);
+       Empleado empleado2 =  empleadoDaoJdbc.buscarPorId(1);
        assertEquals(empleado.getNombre(), empleado2.getNombre());
    }
     
@@ -68,7 +69,7 @@ public class EmpleadoDaoJdbcTest {
        //creo objeto empleado para llamar al metodo crear
        Contratados empleado = new Contratados();
        java.util.Date fechaActual = new java.util.Date();       
-       empleado.setId(2);//cualquiera total grava el que sigue
+       empleado.setId(1);//cualquiera total grava el que sigue
        empleado.setNombre("JUAN" );
        empleado.setCorreoElectronico("JUAN@PEPEC.COM");
        empleado.setCuil("21257131123");
@@ -78,22 +79,60 @@ public class EmpleadoDaoJdbcTest {
        System.out.println(empleado.getNombre() + "Crear2C:");        
        empleadoDaoJdbc.crear(empleado);
        System.out.println(empleado.getNombre() + "Crear3C:");
-       Empleado empleado2 =  empleadoDaoJdbc.buscarPorId(2);
+       Empleado empleado2 =  empleadoDaoJdbc.buscarPorId(1);
        assertEquals(empleado.getNombre(), empleado2.getNombre());
    }
     
-     //controlo el eliminar y el buscar por id
+  
+  
+    
+      //controlo el actualizar
+    
+    @Test
+    public void testActualizar() {
+       System.out.println("Actualizar");
+       empleadoDaoJdbc = new EmpleadoDaoJdbc();
+       //creo objeto empleado para llamar al metodo crear
+       Efectivo empleado = new Efectivo();
+       int posicion = 1;
+       for(int i=5 ;i<200;i++){
+           Empleado empleadox =  empleadoDaoJdbc.buscarPorId(i);
+            if (empleadox != null){              
+                if ("JUAN".equals(empleadox.getNombre()) && empleadox.esEfectivo()){
+                    posicion = i;
+                    i = 101;
+                } else {
+                }  
+            }
+       }
+       java.util.Date fechaActual = new java.util.Date();       
+       empleado.setId(posicion);
+       empleado.setNombre("JUAN Actual" );
+       empleado.setCorreoElectronico("JUAN@PEPE.COM");
+       empleado.setCuil("21257131123");
+       empleado.setFechaIngreso(fechaActual);
+       empleado.setHorasTrabajadas(40);
+       empleado.setCanMInHorObl(40);
+       empleado.setComisiones(2000.0);
+       empleado.setSueldoBasico(30000.0);       
+       System.out.println(empleado.getNombre() + "Actualizar2:" + posicion);        
+       empleadoDaoJdbc.actualizar(empleado); 
+       System.out.println(empleado.getNombre() + "Actualizar3:");
+       Empleado empleado2 =  empleadoDaoJdbc.buscarPorId(posicion);
+       assertEquals(empleado.getNombre(), empleado2.getNombre());
+   }
+  
+       //controlo el eliminar y el buscar por id, no los 5 primeros    
     @Test
     public void testEliminar() {
        empleadoDaoJdbc = new EmpleadoDaoJdbc();
        System.out.println("Eliminar empleado");
-       System.out.println(  "Crear2C:");  
        int posicion = 1;
-       for(int i=1 ;i<200;i++){
+       for(int i=5 ;i<200;i++){
            Empleado empleadox =  empleadoDaoJdbc.buscarPorId(i);
            if (empleadox != null){
                posicion = i;
-               i = 101;
+               i = 201;
            }                   
        }
        System.out.println("Eliminar empleado posicion:" + posicion);
@@ -104,5 +143,21 @@ public class EmpleadoDaoJdbcTest {
       // System.out.println("antes:" + empleado1.getNombre() + " despues " + empleado2.getNombre());
        assertNull(empleado2);
    }
+  
     
+       //controlo el buscar lista de todos
+    @Test
+    public void testTodos() {
+       empleadoDaoJdbc = new EmpleadoDaoJdbc();
+       System.out.println("Buscar todos los empleado");
+       List<Empleado> testBuscados = empleadoDaoJdbc.buscarTodos();
+       //System.out.println("Listado:" + testBuscados.toString());
+       int cant = 1;
+       for (Empleado empleado2: testBuscados) {
+    //código para acceder a cada campo del Item.
+        cant +=1;
+        System.out.println(empleado2.getId() + empleado2.getNombre());
+        }
+       assertTrue(cant > 1);
+   }
 }

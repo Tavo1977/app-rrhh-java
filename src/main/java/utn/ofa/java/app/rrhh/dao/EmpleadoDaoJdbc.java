@@ -27,9 +27,9 @@ public class EmpleadoDaoJdbc implements EmpleadoDao{
     + "COMISIONES, HS_MINIMAS, COSTO_HORA, TIPO_EMPLEADO) "
     + "VALUES (?,?,?,?,?,?,?,?,?,?)";
 
-     private final String UPDATE_EMPLEADO = "UPDATE EMPLEADOS SET NOMBRE = ? CORREO = ? CUIL = ? "
-    + "FECHA_INGRESO = ? HS_TRABAJADAS = ? SUELDO_BASICO = ? "
-    + "COMISIONES = ? HS_MINIMAS = ? COSTO_HORA = ? TIPO_EMPLEADO = ?) "
+     private final String UPDATE_EMPLEADO = "UPDATE EMPLEADOS SET NOMBRE = ?, CORREO = ?, CUIL = ?, "
+    + "FECHA_INGRESO = ?, HS_TRABAJADAS = ?, SUELDO_BASICO = ?, "
+    + "COMISIONES = ?, HS_MINIMAS = ?, COSTO_HORA = ?, TIPO_EMPLEADO = ? "
     + "WHERE ID = ? ";
     
      private final String BUSCAR_EMPLEADO = "SELECT NOMBRE, CORREO, CUIL, "
@@ -102,9 +102,13 @@ public class EmpleadoDaoJdbc implements EmpleadoDao{
                 ps.setDouble(6, empEf.getSueldoBasico());
                 ps.setDouble(7, empEf.getComisiones());
                 ps.setInt(8, empEf.getCanMInHorObl());
+                ps.setDouble(9, 0.0);
                 ps.setInt(10, 1);
             } else if (e.esContratado()){
                 Contratados c = (Contratados) e;
+                ps.setDouble(6, 0);
+                ps.setDouble(7,0);
+                ps.setInt(8, 0);               
                 ps.setDouble(9, c.getMonPorHor());
                 ps.setInt(10, 2);
             }
@@ -151,7 +155,7 @@ public class EmpleadoDaoJdbc implements EmpleadoDao{
                     } else if(rs.getInt("TIPO_EMPLEADO") == 2){
                         //Contratados empBuscado;
                         empBuscado = new Contratados();
-                        empBuscado.setId(rs.getInt("ID"));
+                        empBuscado.setId(id);
                         empBuscado.setNombre(rs.getString("NOMBRE") );
                         empBuscado.setCorreoElectronico(rs.getString("CORREO"));
                         empBuscado.setCuil(rs.getString("CUIL"));
