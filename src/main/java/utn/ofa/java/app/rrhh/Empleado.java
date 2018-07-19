@@ -68,5 +68,6 @@ public abstract class Empleado {
     }
 
     public abstract Double salario();
-        
+    public abstract Boolean esEfectivo();    
+    public abstract Boolean esContratado();
 }

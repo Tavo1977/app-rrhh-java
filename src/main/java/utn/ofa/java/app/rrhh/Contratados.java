@@ -25,4 +25,15 @@ public class Contratados extends Empleado{
     public Double salario() {
        return horasTrabajadas * MonPorHor;
     }
+    
+    @Override
+    public Boolean esEfectivo(){
+        return false;
+    }
+      
+    @Override
+    public Boolean esContratado(){
+        return true;
+    }
+    
 }

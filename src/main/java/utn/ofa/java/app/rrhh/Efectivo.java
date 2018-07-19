@@ -46,4 +46,14 @@ public class Efectivo extends Empleado{
         }
         return SueldoBasico + Comisiones + extra;
     }
+    
+    @Override
+    public Boolean esEfectivo(){
+        return true;
+    }
+      
+    @Override
+    public Boolean esContratado(){
+        return false;
+    }
 }
