@@ -35,7 +35,7 @@ public class ConexionJDBC {
             // System.out.println("Error al conectar con: " + URL_CONEXION + " - " + USUARIO + " - " + PASSWORD);
             }
         //}
-        System.out.println("CONECTA4" + _CONEXION.toString());
+      //  System.out.println("CONECTA4" + _CONEXION.toString());
         return _CONEXION;
     }
     public static void liberarConexion() {

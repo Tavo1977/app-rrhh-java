@@ -45,7 +45,7 @@ public class EmpleadoDaoJdbcTest {
        //creo objeto empleado para llamar al metodo crear
        Efectivo empleado = new Efectivo();
        java.util.Date fechaActual = new java.util.Date();       
-       empleado.setId(1);
+       empleado.setId(1);//no usa al alta
        empleado.setNombre("JUAN" );
        empleado.setCorreoElectronico("JUAN@PEPE.COM");
        empleado.setCuil("21257131123");
@@ -54,10 +54,19 @@ public class EmpleadoDaoJdbcTest {
        empleado.setCanMInHorObl(40);
        empleado.setComisiones(2000.0);
        empleado.setSueldoBasico(30000.0);       
-       System.out.println(empleado.getNombre() + "Crear2:");        
+       //System.out.println(empleado.getNombre() + "Crear2:");        
        empleadoDaoJdbc.crear(empleado);
-       System.out.println(empleado.getNombre() + "Crear3:");
-       Empleado empleado2 =  empleadoDaoJdbc.buscarPorId(1);
+       
+       List<Empleado> testBuscados = empleadoDaoJdbc.buscarTodos();
+       int idmax = 1;
+       for (Empleado empleadoItem: testBuscados) {
+            int idnuevo = empleadoItem.getId() ;
+            if(idnuevo > idmax){
+                idmax = idnuevo;
+            }
+        }// el id maximo es el que inserte recien si funciono crear
+       Empleado empleado2 =  empleadoDaoJdbc.buscarPorId(idmax);       
+       //System.out.println(empleado.getNombre() + "Crear3:");
        assertEquals(empleado.getNombre(), empleado2.getNombre());
    }
     
@@ -76,17 +85,26 @@ public class EmpleadoDaoJdbcTest {
        empleado.setFechaIngreso(fechaActual);
        empleado.setHorasTrabajadas(40);
        empleado.setMonPorHor(250);
-       System.out.println(empleado.getNombre() + "Crear2C:");        
+       //System.out.println(empleado.getNombre() + "Crear2C:");        
        empleadoDaoJdbc.crear(empleado);
-       System.out.println(empleado.getNombre() + "Crear3C:");
-       Empleado empleado2 =  empleadoDaoJdbc.buscarPorId(1);
+       
+        List<Empleado> testBuscados = empleadoDaoJdbc.buscarTodos();
+       int idmax = 1;
+       for (Empleado empleadoItem: testBuscados) {
+            int idnuevo = empleadoItem.getId() ;
+            if(idnuevo > idmax){
+                idmax = idnuevo;
+            }
+        }// el id maximo es el que inserte recien si funciono crear
+       
+       Empleado empleado2 =  empleadoDaoJdbc.buscarPorId(idmax);
        assertEquals(empleado.getNombre(), empleado2.getNombre());
    }
     
   
   
     
-      //controlo el actualizar
+    //controlo el actualizar
     
     @Test
     public void testActualizar() {
@@ -100,11 +118,11 @@ public class EmpleadoDaoJdbcTest {
             if (empleadox != null){              
                 if ("JUAN".equals(empleadox.getNombre()) && empleadox.esEfectivo()){
                     posicion = i;
-                    i = 101;
+                    i = 201;//para uqe salga, ojo si cambio enel for camiar aca  tb
                 } else {
                 }  
             }
-       }
+       }// recupera el primer indice de algun juan qu eno sea de los primeros 5
        java.util.Date fechaActual = new java.util.Date();       
        empleado.setId(posicion);
        empleado.setNombre("JUAN Actual" );
@@ -115,9 +133,9 @@ public class EmpleadoDaoJdbcTest {
        empleado.setCanMInHorObl(40);
        empleado.setComisiones(2000.0);
        empleado.setSueldoBasico(30000.0);       
-       System.out.println(empleado.getNombre() + "Actualizar2:" + posicion);        
+       System.out.println(empleado.getNombre() + "Actualizar el: " + posicion);        
        empleadoDaoJdbc.actualizar(empleado); 
-       System.out.println(empleado.getNombre() + "Actualizar3:");
+      // System.out.println(empleado.getNombre() + "Actualizar3:");
        Empleado empleado2 =  empleadoDaoJdbc.buscarPorId(posicion);
        assertEquals(empleado.getNombre(), empleado2.getNombre());
    }
@@ -132,12 +150,12 @@ public class EmpleadoDaoJdbcTest {
            Empleado empleadox =  empleadoDaoJdbc.buscarPorId(i);
            if (empleadox != null){
                posicion = i;
-               i = 201;
+               i = 201;//ojo que corresponda con el for  
            }                   
-       }
-       System.out.println("Eliminar empleado posicion:" + posicion);
+       }//recupera para eliminar el primero comenzando del 5
+       System.out.println("Eliminar empleado posicion: " + posicion);
        Empleado empleado1 =  empleadoDaoJdbc.buscarPorId(posicion);
-       System.out.println("antes:" + empleado1.getNombre());
+       System.out.println("antes: " + empleado1.getNombre());
        empleadoDaoJdbc.eliminar(posicion);       
        Empleado empleado2 =  empleadoDaoJdbc.buscarPorId(posicion);
       // System.out.println("antes:" + empleado1.getNombre() + " despues " + empleado2.getNombre());
@@ -156,7 +174,7 @@ public class EmpleadoDaoJdbcTest {
        for (Empleado empleado2: testBuscados) {
     //código para acceder a cada campo del Item.
         cant +=1;
-        System.out.println(empleado2.getId() + empleado2.getNombre());
+        System.out.println(empleado2.getId() + " - "+ empleado2.getNombre());
         }
        assertTrue(cant > 1);
    }

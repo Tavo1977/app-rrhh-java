@@ -47,11 +47,11 @@ public class EmpleadoDaoJdbc implements EmpleadoDao{
     
     @Override
     public void crear(Empleado e) {
-        System.out.println("1");
+        //System.out.println("1");
         Connection conn = ConexionJDBC.getConexion();
-        System.out.println("2");
+        //System.out.println("2");
         try(PreparedStatement ps = conn.prepareStatement(INSERT_EMPLEADO)){
-            System.out.println("3" + e.getNombre());
+        //    System.out.println("3" + e.getNombre());
             ps.setString(1, e.getNombre());
             ps.setString(2, e.getCorreoElectronico());
             ps.setString(3, e.getCuil());
@@ -59,9 +59,9 @@ public class EmpleadoDaoJdbc implements EmpleadoDao{
             ps.setDate(4, new Date(e.getFechaIngreso().getTime()));
            // ps.setDate(4, '1991-01-29');
             ps.setInt(5, e.getHorasTrabajadas());
-            System.out.println("3.1" + e.esEfectivo() + e.esContratado());
+          //  System.out.println("3.1" + e.esEfectivo() + e.esContratado());
             if(e.esEfectivo()){
-                System.out.println("4");
+              //  System.out.println("4");
                 Efectivo empEf = (Efectivo) e;
                 ps.setDouble(6, empEf.getSueldoBasico());
                 ps.setDouble(7, empEf.getComisiones());
@@ -69,7 +69,7 @@ public class EmpleadoDaoJdbc implements EmpleadoDao{
                 ps.setDouble(9, 0.0);
                 ps.setInt(10, 1);
             } else if (e.esContratado()){
-                System.out.println("5");
+             //   System.out.println("5");
                 Contratados c = (Contratados) e;
                 ps.setDouble(6, 0);
                 ps.setDouble(7, 0);
@@ -77,14 +77,14 @@ public class EmpleadoDaoJdbc implements EmpleadoDao{
                 ps.setDouble(9, c.getMonPorHor());
                 ps.setInt(10, 2);
             }
-            System.out.println("6");
+          //  System.out.println("6");
             int filasInsertadas = ps.executeUpdate();
         }catch(SQLException ex){
             
-            System.out.println("8");
+          //  System.out.println("8");
             ex.printStackTrace();
         }
-        System.out.println("7");
+       // System.out.println("7");
         ConexionJDBC.liberarConexion();
     }
    
