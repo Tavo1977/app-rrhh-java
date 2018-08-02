@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 public class ConexionJDBC {
     private static final String USUARIO = "root";
     private static final String PASSWORD = "Fantaman101";
-    private static final String URL_CONEXION = "jdbc:mysql://localhost:3306/app-rrhh";
+    private static final String URL_CONEXION = "jdbc:mysql://127.0.0.1:3306/app-rrhh";
     //Connection conn = null;
     private static Connection _CONEXION;
     public static Connection getConexion() {
@@ -35,7 +35,7 @@ public class ConexionJDBC {
             // System.out.println("Error al conectar con: " + URL_CONEXION + " - " + USUARIO + " - " + PASSWORD);
             }
         //}
-        System.out.println("CONECTA4" + _CONEXION.toString());
+     //   System.out.println("CONECTA4" + _CONEXION.toString());
         return _CONEXION;
     }
     public static void liberarConexion() {

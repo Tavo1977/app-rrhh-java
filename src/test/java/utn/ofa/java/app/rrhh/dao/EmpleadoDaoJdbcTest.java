@@ -57,7 +57,7 @@ public class EmpleadoDaoJdbcTest {
        System.out.println(empleado.getNombre() + "Crear2:");        
        empleadoDaoJdbc.crear(empleado);
        System.out.println(empleado.getNombre() + "Crear3:");
-       Empleado empleado2 =  empleadoDaoJdbc.buscarPorId(1);
+       Empleado empleado2 =  empleadoDaoJdbc.buscarPorId(2);
        assertEquals(empleado.getNombre(), empleado2.getNombre());
    }
     
@@ -79,7 +79,7 @@ public class EmpleadoDaoJdbcTest {
        System.out.println(empleado.getNombre() + "Crear2C:");        
        empleadoDaoJdbc.crear(empleado);
        System.out.println(empleado.getNombre() + "Crear3C:");
-       Empleado empleado2 =  empleadoDaoJdbc.buscarPorId(1);
+       Empleado empleado2 =  empleadoDaoJdbc.buscarPorId(2);
        assertEquals(empleado.getNombre(), empleado2.getNombre());
    }
     
